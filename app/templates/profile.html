@@ -129,7 +129,7 @@
                                                 <td>
                                                     {{post.neighbourhood}}
                                                 </td>
-                                                <td>{{post.cretated_at|date}}</td>
+                                                <td>{{post.created_at|date}}</td>
                                                 <td>
                                                     <button class="btn" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal-{{post.id}}">
@@ -139,6 +139,7 @@
                                                         class="btn ms-auto text-danger">
                                                         <span class="material-icons">delete</span>
                                                     </a>
+                                                    {% include 'partials/edit-post-modal.html' %}
                                                 </td>
                                             </tr>
                                             {% endfor %}

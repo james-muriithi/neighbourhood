@@ -4,6 +4,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from app.decorators import has_neighbourhood
+from django.utils.text import slugify
 
 from app.forms import ProfileForm, UpdatePostForm
 from app.models import Location, NeighbourHood, Post
@@ -49,8 +50,10 @@ def update_post(request, post_id):
         post = Post.objects.get(id=post_id)
         form = UpdatePostForm(request.POST, instance=post)
 
-        if form.is_valid():
-            form.save()
+        if form.is_valid():            
+            post = form.save(commit=False)
+            post.slug = slugify(post.title)
+            post.save()
             return redirect(request.META.get('HTTP_REFERER'), {'success': 'Post updated Successfully'})
 
     return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error updating'})

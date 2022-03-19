@@ -1,0 +1,29 @@
+<div class="modal fade" id="exampleModal-{{post.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'update_post' post_id=post.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="image_name">Title</label>
+                        <input type="text" class="form-control" value="{{post.title}}" name="title" required="">
+                    </div>
+                    <input type="hidden" name="user_id" value="38">
+                    <div class="form-group mt-3">
+                        <label for="exampleFormControlTextarea1">Descrition</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"
+                            required="">{{post.content}}</textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary text-white">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
