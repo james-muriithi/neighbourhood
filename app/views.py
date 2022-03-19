@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from app.decorators import has_neighbourhood
 
 from app.forms import ProfileForm
 
@@ -10,6 +11,7 @@ from app.forms import ProfileForm
 
 
 @login_required()
+@has_neighbourhood
 def index(request):
     return render(request, 'index.html')
 

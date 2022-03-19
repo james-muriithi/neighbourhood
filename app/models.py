@@ -23,7 +23,7 @@ class NeighbourHood(models.Model):
     name = models.CharField(max_length=120)
     slug = models.SlugField(null=True, unique=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    admin = models.ForeignKey('app.User', on_delete=models.CASCADE)
+    admin = models.ForeignKey('app.User', on_delete=models.CASCADE, related_name='neighbourhoods')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def create_neigborhood(self):
@@ -156,8 +156,8 @@ class User(AbstractUser):
     avatar = CloudinaryField('image', null=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
     contact = models.TextField(max_length=20, blank=True, null=True)
-    neigbourhood = models.ForeignKey(
-        NeighbourHood, on_delete=models.SET_NULL, null=True)
+    neighbourhood = models.ForeignKey(
+        NeighbourHood, on_delete=models.SET_NULL, null=True, related_name="users")
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL, null=True)
     USERNAME_FIELD = 'email'
