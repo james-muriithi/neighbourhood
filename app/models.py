@@ -127,13 +127,22 @@ class Post(models.Model):
     slug = models.SlugField(null=True, unique=True)
     content = models.TextField(blank=True, null=True)
     image = CloudinaryField('image', blank=True, null=True)
-    user = models.ForeignKey('app.User', on_delete=models.CASCADE)
+    user = models.ForeignKey('app.User', on_delete=models.CASCADE, related_name='posts')
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def thumbnail(self):
+        return self.image.build_url(height=200, crop="pad", format='webp')
+
+    @property
+    def project_image(self):
+        return self.image.build_url(format='webp')
+
     # create post
     def create_post(self):
+        self.slug = slugify(self.title)
         self.save()
 
     # delete post
@@ -143,6 +152,10 @@ class Post(models.Model):
     # update post
     def update_post(self):
         self.update()
+
+    @classmethod
+    def get_post_by_slug(cls, slug):
+        return cls.objects.get(slug=slug)
 
     # search post
     @classmethod

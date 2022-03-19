@@ -5,8 +5,8 @@ import cloudinary.uploader
 import cloudinary.api
 from app.decorators import has_neighbourhood
 
-from app.forms import ProfileForm
-from app.models import Location, NeighbourHood
+from app.forms import ProfileForm, UpdatePostForm
+from app.models import Location, NeighbourHood, Post
 
 # Create your views here.
 
@@ -41,3 +41,30 @@ def update_avatar(request):
         request.user.avatar = profile_image['url']
         request.user.save()
         return redirect(request.META.get('HTTP_REFERER'), {'success': 'Profile updated successfully'})
+
+
+@login_required()
+def update_post(request, post_id):
+    if request.method == 'POST':
+        post = Post.objects.get(id=post_id)
+        form = UpdatePostForm(request.POST, instance=post)
+
+        if form.is_valid():
+            form.save()
+            return redirect(request.META.get('HTTP_REFERER'), {'success': 'Post updated Successfully'})
+
+    return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error updating'})
+
+
+# delete post
+@login_required()
+def delete_post(request, post_id):
+    post = Post.objects.get(id=post_id)
+    post.delete_post()
+    return redirect("/profile", {"success": "Post Deleted Successfully"})
+
+
+@login_required()
+def single_post(request, slug):
+    post = Post.get_post_by_slug(slug)
+    return render(request, 'single-post.html', {'post': post, })
