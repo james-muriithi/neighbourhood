@@ -21,7 +21,7 @@ def index(request):
 def profile(request):
     title = f'Profile {request.user.full_name}'
     hoods = NeighbourHood.get_all_hoods()
-    locations = Location.get_all_hoods()
+    locations = Location.get_all_locations()
     return render(request, 'profile.html', {'title': title, 'hoods': hoods, 'locations': locations})
 
 

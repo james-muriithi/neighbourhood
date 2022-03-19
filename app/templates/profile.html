@@ -58,16 +58,24 @@
                             <div class="form-group">
                                 <label for="" class="form-label text-sm">Neighbourhood</label>
                                 <select name="neighbourhood" class="form-select" required>
+                                    <option value="" disabled selected>--Select Neighbourhood--</option>
                                     {% for hood in hoods %}
-                                    <option value="{{hood.id}}">{{hood.name}}</option>
+                                    <option value="{{hood.id}}" {% if user.neighbourhood.id is hood.id %} selected
+                                        {%endif %}>
+                                        {{hood.name}}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="" class="form-label text-sm">Location</label>
                                 <select name="location" class="form-select" required>
+                                    <option value="" disabled selected>--Select Location--</option>
                                     {% for location in locations %}
-                                    <option value="{{location.id}}">{{location.name}}</option>
+                                    <option value="{{location.id}}" {% if user.location.id is location.id %} selected
+                                        {%endif %}>
+                                        {{location.name}}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -89,7 +97,7 @@
                     <div class="col-sm-12 mb-3">
                         <div class="card h-100">
                             <div class="card-body">
-                                <h2 class="fw-bold fs-3 text-center text-secondary">Your Projects</h2>
+                                <h2 class="fw-bold fs-3 text-center text-secondary">Your Posts</h2>
                                 <div class="table-responsive">
                                     <table class="table table-responsive table-hover mt-3">
                                         <thead>
@@ -98,51 +106,49 @@
                                                 <th scope="col">Image</th>
                                                 <th scope="col">Title</th>
                                                 <th scope="col">Location</th>
-                                                <th scope="col">URL</th>
-                                                <th scope="col">Votes</th>
+                                                <th scope="col">Neighbourhood</th>
                                                 <th scope="col">Created At</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% if user.projects.count > 0 %}
-                                            {% for project in user.projects.all %}
+                                            {% if user.posts.count > 0 %}
+                                            {% for project in user.posts.all %}
                                             <tr>
                                                 <td>{{forloop.counter}}</td>
                                                 <td>
-                                                    <img src="{{project.thumbnail}}" alt="" class="img-40">
+                                                    <img src="{{post.thumbnail}}" alt="" class="img-40">
                                                 </td>
                                                 <td>
-                                                    <a href="{% url 'single_project' slug=project.slug %}">
-                                                        {{project.title|truncatechars:30}}
+                                                    <a href="{% url 'single_post' slug=post.slug %}">
+                                                        {{post.title|truncatechars:30}}
                                                     </a>
                                                 </td>
-                                                <td>{{project.location}}</td>
+                                                <td>{{post.location}}</td>
                                                 <td>
-                                                    <a href="{{project.url}}" target="_blank"
+                                                    <a href="{{post.url}}" target="_blank"
                                                         class="btn btn-sm btn-outline-primary rounded-pill text-sm px-3">
                                                         visit
                                                     </a>
                                                 </td>
-                                                <td>{{project.avg_rate}}</td>
-                                                <td>{{project.date|date}}</td>
+                                                <td>{{post.date|date}}</td>
                                                 <td>
                                                     <button class="btn" data-bs-toggle="modal"
                                                         data-bs-target="#exampleModal-{{project.id}}">
                                                         <span class="material-icons">edit</span>
                                                     </button>
-                                                    <a href="{% url 'project_delete' project_id=project.id %}"
+                                                    <a href="{% url 'post_delete' post_id=post.id %}"
                                                         class="btn ms-auto text-danger">
                                                         <span class="material-icons">delete</span>
                                                     </a>
-                                                    {% include 'partials/edit-project-modal.html' %}
+                                                    <!-- {% include 'partials/edit-project-modal.html' %} -->
                                                 </td>
                                             </tr>
                                             {% endfor %}
                                             {% else %}
                                             <tr>
-                                                <td colspan="8" class="text-center">
-                                                    No projects yet
+                                                <td colspan="7" class="text-center">
+                                                    No posts yet
                                                 </td>
                                             </tr>
                                             {% endif %}
