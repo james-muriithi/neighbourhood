@@ -67,6 +67,9 @@ class NeighbourHood(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Business(models.Model):
     name = models.CharField(max_length=150)
@@ -105,6 +108,9 @@ class Business(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Contact(models.Model):
     name = models.CharField(max_length=50)
@@ -127,7 +133,8 @@ class Post(models.Model):
     slug = models.SlugField(null=True, unique=True)
     content = models.TextField(blank=True, null=True)
     image = CloudinaryField('image', blank=True, null=True)
-    user = models.ForeignKey('app.User', on_delete=models.CASCADE, related_name='posts')
+    user = models.ForeignKey(
+        'app.User', on_delete=models.CASCADE, related_name='posts')
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -140,8 +147,8 @@ class Post(models.Model):
     def project_image(self):
         return self.image.build_url(format='webp')
 
-    # create post
-    def create_post(self):
+    # save post
+    def save_post(self):
         self.slug = slugify(self.title)
         self.save()
 
@@ -171,6 +178,9 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ['-created_at']
 
 
 class User(AbstractUser):
