@@ -50,11 +50,11 @@
 
             {% endif %}
             {% for message in messages %}
-            {% if message.tags == 'success' %}
-            toastr.success("{{ message }}");
-            {% else %}
-            toastr.error("{{ message }}");
-            {% endif %}
+                {% if message.tags == 'success' %}
+                toastr.success("{{ message }}");
+                {% else %}
+                toastr.error("{{ message }}");
+                {% endif %}
             {% endfor %}
         });
     </script>

@@ -6,6 +6,7 @@ import cloudinary.api
 from app.decorators import has_neighbourhood
 
 from app.forms import ProfileForm
+from app.models import Location, NeighbourHood
 
 # Create your views here.
 
@@ -19,7 +20,9 @@ def index(request):
 @login_required()
 def profile(request):
     title = f'Profile {request.user.full_name}'
-    return render(request, 'profile.html', {'title': title})
+    hoods = NeighbourHood.get_all_hoods()
+    locations = Location.get_all_hoods()
+    return render(request, 'profile.html', {'title': title, 'hoods': hoods, 'locations': locations})
 
 
 @login_required()

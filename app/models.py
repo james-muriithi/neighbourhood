@@ -14,6 +14,10 @@ class Location(models.Model):
     def save_location(self):
         self.save()
 
+    @classmethod
+    def get_all_locations(cls):
+        return cls.objects.all()
+
     def __str__(self):
         return self.name
 
@@ -23,7 +27,8 @@ class NeighbourHood(models.Model):
     name = models.CharField(max_length=120)
     slug = models.SlugField(null=True, unique=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    admin = models.ForeignKey('app.User', on_delete=models.CASCADE, related_name='neighbourhoods')
+    admin = models.ForeignKey(
+        'app.User', on_delete=models.CASCADE, related_name='neighbourhoods')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def create_neigborhood(self):
@@ -52,8 +57,12 @@ class NeighbourHood(models.Model):
     # find neighbourhood by slug
     @classmethod
     def find_neigborhood_by_slug(cls, slug):
-        hood = cls.objects.get(slug=slug)
-        return hood
+        return cls.objects.get(slug=slug)
+
+    @classmethod
+    def get_all_hoods(cls):
+        hoods = cls.objects.all()
+        return hoods
 
     def __str__(self):
         return self.name
