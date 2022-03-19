@@ -104,7 +104,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': 'awwwards',
+            'NAME': 'neighbourhood',
             'USER': config('DB_USER', default=''),
             'PASSWORD': config('DB_PASSWORD', default=''),
         },
