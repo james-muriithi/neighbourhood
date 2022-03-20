@@ -1,24 +1,46 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block 'content' %}
+<style>
+    @media screen and (min-width: 1200px) {
+        .post-image {
+            height: 500px !important;
+        }
+    }
+
+    @media screen and (min-width: 778px) and (max-width: 1200px) {
+        .post-image {
+            height: 400px !important;
+        }
+    }
+
+    @media screen and (max-width: 778px) {
+        .post-image {
+            height: 400px !important;
+        }
+    }
+</style>
 <section class="py-5">
-    <div class="row justify-content-center pt-5">
-        <div class="col-md-8">
-            <div>
-                <img src="{{post.post_image}}" alt="" class="img-fluid w-100">
+    <div class="row justify-content-center container mx-auto pt-5 px-2 px-md-auto">
+        <div class="col-md-12 pt-3">
+            <div class="post-image">
+                <img src="{{post.post_image}}" alt="" class="h-100 img-fluid w-100">
             </div>
             <div class="bg-white pb-4">
                 <div class="px-2">
-                    <h5 class="fw-bold pt-5">
+                    <div class="pt-4">
+                        <p class="text-muted">{{post.location}}</p>
+                    </div>
+                    <h5 class="fw-bold pt-1">
                         {{post.title}}
                     </h5>
                     <p class="text-muted mb-1 text-sm">
                         By <span class="fw-bold text-primary">{{post.user.full_name}}</span> .
-                        <span class="ps-2">{{post.date|date}}</span>
+                        <span class="ps-2">{{post.created_at|date}}</span>
                     </p>
                     <div class="description pt-2">
                         <p class="text-muted text-start">
-                            {{post.description}}
+                            {{post.content}}
                         </p>
                     </div>
                 </div>
@@ -26,5 +48,4 @@
         </div>
     </div>
 </section>
-{% include 'partials/vote-modal.html' %}
 {% endblock %}
