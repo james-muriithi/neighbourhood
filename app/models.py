@@ -28,7 +28,7 @@ class NeighbourHood(models.Model):
     slug = models.SlugField(null=True, unique=True)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     admin = models.ForeignKey(
-        'app.User', on_delete=models.CASCADE, related_name='neighbourhoods')
+        'app.User', on_delete=models.CASCADE, related_name='neighbourhoods', null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def create_neigborhood(self):
@@ -78,9 +78,9 @@ class Business(models.Model):
     email = models.EmailField(max_length=150)
     description = models.TextField(blank=True, null=True)
     user = models.ForeignKey(
-        'app.User', on_delete=models.CASCADE, related_name="businesses")
+        'app.User', on_delete=models.CASCADE, related_name="businesses", null=True)
     neighbourhood = models.ForeignKey(
-        NeighbourHood, on_delete=models.CASCADE, related_name="businesses")
+        NeighbourHood, on_delete=models.CASCADE, related_name="businesses", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -138,7 +138,7 @@ class Contact(models.Model):
     email = models.EmailField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50)
     neighbourhood = models.ForeignKey(
-        NeighbourHood, on_delete=models.CASCADE, related_name="contacts")
+        NeighbourHood, on_delete=models.CASCADE, related_name="contacts", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     # create contact
@@ -156,9 +156,10 @@ class Post(models.Model):
     content = models.TextField(blank=True, null=True)
     image = CloudinaryField('image', blank=True, null=True)
     user = models.ForeignKey(
-        'app.User', on_delete=models.CASCADE, related_name='posts')
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+        'app.User', on_delete=models.CASCADE, related_name='posts', null=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
+    neighbourhood = models.ForeignKey(
+        NeighbourHood, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -213,10 +214,10 @@ class User(AbstractUser):
     full_name = models.CharField(max_length=124)
     email = models.CharField(max_length=124, unique=True)
     avatar = CloudinaryField('image', null=True)
-    bio = models.TextField(max_length=500, blank=True, null=True)
-    contact = models.TextField(max_length=20, blank=True, null=True)
+    bio = models.TextField(max_length=500, null=True)
+    contact = models.TextField(max_length=20, null=True,)
     neighbourhood = models.ForeignKey(
-        NeighbourHood, on_delete=models.SET_NULL, null=True, related_name="users")
+        NeighbourHood, on_delete=models.SET_NULL, null=True, related_name="users",)
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL, null=True)
     is_active = models.BooleanField(default=False)
