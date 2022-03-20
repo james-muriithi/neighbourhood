@@ -5,6 +5,7 @@ import cloudinary.uploader
 import cloudinary.api
 from app.decorators import has_neighbourhood
 from django.utils.text import slugify
+from django.contrib import messages
 
 from app.forms import BusinessForm, PostForm, ProfileForm, UpdateBusinessForm, UpdatePostForm
 from app.models import Business, Location, NeighbourHood, Post, User
@@ -33,8 +34,11 @@ def update_profile(request):
         form = ProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-        return redirect(request.META.get('HTTP_REFERER'), {'success': 'Profile updated successfully'})
+            messages.success(request, 'Profile updated successfully')
+        else:
+            messages.error(request, 'Error updating profile')
 
+        return redirect(request.META.get('HTTP_REFERER'))
 
 @login_required()
 def update_avatar(request):
@@ -42,6 +46,7 @@ def update_avatar(request):
         profile_image = cloudinary.uploader.upload(request.FILES['avatar'])
         request.user.avatar = profile_image['url']
         request.user.save()
+        messages.success(request, 'Profile updated successfully')
         return redirect(request.META.get('HTTP_REFERER'), {'success': 'Profile updated successfully'})
 
 
@@ -55,6 +60,7 @@ def update_post(request, post_id):
             post = form.save(commit=False)
             post.slug = slugify(post.title)
             post.save()
+            messages.success(request, 'Post updated successfully')
             return redirect(request.META.get('HTTP_REFERER'), {'success': 'Post updated Successfully'})
 
     return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error updating'})
@@ -65,6 +71,7 @@ def update_post(request, post_id):
 def delete_post(request, post_id):
     post = Post.objects.get(id=post_id)
     post.delete_post()
+    messages.success(request, 'Post Deleted successfully')
     return redirect("/profile", {"success": "Post Deleted Successfully"})
 
 
@@ -86,7 +93,7 @@ def upload_post(request):
             post.neighbourhood = request.user.neighbourhood
             post.location = request.user.location
             post.save_post()
-
+            messages.success(request, 'Post uploaded successfully')
             return redirect(request.META.get('HTTP_REFERER'), {'success': 'Post Uploaded Successfully'})
 
     return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error uploading'})
@@ -103,7 +110,7 @@ def upload_business(request):
             business.user = request.user
             business.neighbourhood = request.user.neighbourhood
             business.save_business()
-
+            messages.success(request, 'Business uploaded successfully')
             return redirect(request.META.get('HTTP_REFERER'), {'success': 'Business Uploaded Successfully'})
 
     return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error uploading'})
@@ -119,6 +126,8 @@ def update_business(request, business_id):
             business = form.save(commit=False)
             business.slug = slugify(business.name)
             business.save()
+            messages.success(request, 'Business updated Successfully')
+
             return redirect(request.META.get('HTTP_REFERER'), {'success': 'Business updated Successfully'})
 
     return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error updating'})

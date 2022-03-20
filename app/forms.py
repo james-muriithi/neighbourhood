@@ -11,6 +11,7 @@ class MyCustomUserForm(RegistrationForm):
 
 
 class ProfileForm(forms.ModelForm):
+    bio = forms.CharField(required=False)
     class Meta:
         model = User
         fields = ('full_name', 'bio', 'neighbourhood', 'location', 'contact')
