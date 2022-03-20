@@ -2,8 +2,9 @@
 <div class="project-card">
     <div class="position-relative project-image">
         <img src="{{post.thumbnail}}" alt="" class="img-fluid image w-100">
-        <div data-url="{% url 'single_post' slug=post.slug %}" class="position-absolute top-0 h-100 w-100 overlay flex-column">
-        </div>
+        <a href="{% url 'single_post' slug=post.slug %}"
+            class="position-absolute top-0 h-100 w-100 overlay flex-column">
+        </a>
     </div>
     <div class="details  p-3">
         <p class="text-muted mb-1 text-sm">

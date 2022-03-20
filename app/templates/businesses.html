@@ -4,12 +4,12 @@
 
 <section id="projects" class="container-fluid py-5 px-lg-5">
     <div class="pt-5">
-        <p><b>Posts</b> from your neighbourhood</p>
+        <p><b>Businesses</b> from your neighbourhood</p>
         <div class="projects row">
-            {% if posts %}
-            {% for post in posts %}
+            {% if businesses %}
+            {% for business in businesses %}
             <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-3">
-                {% include 'partials/post-card.html' %}
+                {% include 'partials/business-card.html' %}
             </div>
             {% endfor %}
             {% endif %}

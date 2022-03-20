@@ -134,3 +134,10 @@ def delete_business(request, business_id):
 def single_business(request, slug):
     business = Business.get_business_by_slug(slug)
     return render(request, 'single-business.html', {'business': business, })
+
+
+@login_required()
+@has_neighbourhood
+def businesses(request):
+    businesses = request.user.neighbourhood.businesses.all()
+    return render(request, 'businesses.html', {'businesses': businesses})

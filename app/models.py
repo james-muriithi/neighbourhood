@@ -79,7 +79,8 @@ class Business(models.Model):
     description = models.TextField(blank=True, null=True)
     user = models.ForeignKey(
         'app.User', on_delete=models.CASCADE, related_name="businesses")
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(
+        NeighbourHood, on_delete=models.CASCADE, related_name="businesses")
     created_at = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -120,6 +121,10 @@ class Business(models.Model):
     def get_business_by_slug(cls, slug):
         business = cls.objects.get(slug=slug)
         return business
+
+    @classmethod
+    def get_all_businesses(cls):
+        return cls.objects.all()
 
     def __str__(self):
         return self.name

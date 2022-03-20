@@ -1,0 +1,36 @@
+{% load static %}
+<div class="project-card">
+    <div class="position-relative project-image">
+        <img src="{{business.thumbnail}}" alt="" class="img-fluid image w-100">
+        <a href="{% url 'single_business' slug=business.slug %}"
+            class="position-absolute top-0 h-100 w-100 overlay flex-column">
+        </a>
+    </div>
+    <div class="details  p-3">
+        <p class="text-muted mb-1 text-xs">
+            {{business.neighbourhood}} . <span class="ps-2">{{business.created_at | date}}</span>
+        </p>
+        <a href="{% url 'single_business' slug=business.slug %}" class="">
+            <h6 class="fw-bold">
+                {{business.name | truncatechars:30}}
+            </h6>
+        </a>
+        <div class="d-flex mb-3">
+            <div class="col d-flex center">
+                <i class="material-icons fs-6">email</i>
+                <a href="mailto:{{business.email}}" class="ps-2 text-sm">{{business.email}}</a>
+            </div>
+            <div class="col">
+                <a href="tel:{{business.user.contact}}" class="">{{business.user.contact}}</a>
+            </div>
+        </div>
+        <div class="d-flex align-items-center">
+            <img src="{{business.user.user_avatar}}" height="30" width="30" alt="" class="avatar rounded-circle">
+            <div class="ps-3">
+                <span class="text-muted mb-1 text-uppercase text-xs">Owner
+                    <span class="text-primary">{{business.user.full_name}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
