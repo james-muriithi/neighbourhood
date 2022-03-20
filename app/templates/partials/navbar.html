@@ -20,8 +20,10 @@
                 <li class="nav-item ps-lg-4 pe-4 ps-2 mb-4 mb-lg-0 d-flex align-items-center">
                     <span class="position-relative search">
                         <span class="material-icons ps-1 text-primary position-absolute search-icon">search</span>
-                        <input type="text" class="border border-primary form-control rounded text-primary"
-                            placeholder="Search here..">
+                        <form action="{% url 'search' %}">
+                            <input type="text" name="q" class="border border-primary form-control rounded text-primary"
+                                placeholder="Search here.." value="{{request.GET.q}}">
+                        </form>
                     </span>
                 </li>
                 <li class="nav-item px-2 pt-lg-1">

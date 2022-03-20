@@ -145,8 +145,23 @@ def businesses(request):
     businesses = request.user.neighbourhood.businesses.all()
     return render(request, 'businesses.html', {'businesses': businesses})
 
+
 @login_required()
 @has_neighbourhood
 def contacts(request):
     contacts = request.user.neighbourhood.contacts.all()
     return render(request, 'contacts.html', {'contacts': contacts})
+
+@login_required()
+@has_neighbourhood
+def search(request):
+    if 'q' in request.GET and request.GET["q"]:
+        search_term = request.GET.get("q")
+        searched_businesses = Business.objects.filter(
+            name__icontains=search_term)
+        title = f"Business results For: {search_term}"
+
+        return render(request, "search.html", {"title": title, "businesses": searched_businesses})
+    else:
+        title = "No search term"
+        return render(request, "search.html", {"title": title})

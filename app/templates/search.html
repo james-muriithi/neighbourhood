@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'content' %}
+<section id="projects" class="container-lg py-5 px-lg-5">
+    <div class="mt-5">
+        <p>Businesses results for "<b>{{request.GET.q}}</b>"</p>
+        <div class="projects row mt-4">
+            {% if businesses %}
+            {% for business in businesses %}
+            <div class="col-lg-4 col-md-4 col-sm-6 mb-3">
+                {% include 'partials/business-card.html' %}
+            </div>
+            {% endfor %}
+            {% else %}
+            <span class="px-3 text-muted">No business found</span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
