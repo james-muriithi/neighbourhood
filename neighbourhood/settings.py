@@ -39,8 +39,6 @@ DEBUG = True if ENV == 'development' else False
 
 ALLOWED_HOSTS = ['*']
 
-ALLOWED_HOSTS = ['*']
-
 
 ACCOUNT_ACTIVATION_DAYS = 14  # One-week activation window
 
@@ -145,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Nairobi'
 
 USE_I18N = True
 
@@ -177,6 +175,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = config('MAIL_USERNAME', default='')
 EMAIL_HOST_PASSWORD = config('MAIL_PASSWORD', default='')
 
+# CSRF
+CSRF_COOKIE_SECURE = False
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
