@@ -74,14 +74,24 @@ class NeighbourHood(models.Model):
 class Business(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(null=True, unique=True)
+    image = CloudinaryField('image', blank=True, null=True)
     email = models.EmailField(max_length=150)
     description = models.TextField(blank=True, null=True)
-    user = models.ForeignKey('app.User', on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        'app.User', on_delete=models.CASCADE, related_name="businesses")
     neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def thumbnail(self):
+        return self.image.build_url(height=200, crop="pad", format='webp')
+
+    @property
+    def business_image(self):
+        return self.image.build_url(format='webp')
+
     # create business
-    def create_business(self):
+    def save_business(self):
         self.slug = slugify(self.name)
         self.save()
 
@@ -103,6 +113,12 @@ class Business(models.Model):
     @classmethod
     def get_business(cls, id):
         business = cls.objects.get(id=id)
+        return business
+
+    # find business by slug
+    @classmethod
+    def get_business_by_slug(cls, slug):
+        business = cls.objects.get(slug=slug)
         return business
 
     def __str__(self):
@@ -144,7 +160,7 @@ class Post(models.Model):
         return self.image.build_url(height=200, crop="pad", format='webp')
 
     @property
-    def project_image(self):
+    def post_image(self):
         return self.image.build_url(format='webp')
 
     # save post
