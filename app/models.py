@@ -18,6 +18,10 @@ class Location(models.Model):
     def get_all_locations(cls):
         return cls.objects.all()
 
+    @classmethod
+    def get_location(cls, id):
+        return cls.objects.get(id=id)
+
     def __str__(self):
         return self.name
 
@@ -35,9 +39,8 @@ class NeighbourHood(models.Model):
         self.slug = slugify(self.name)
         self.save()
 
-    @classmethod
-    def delete_neighbourhood(cls, id):
-        cls.objects.filter(id=id).delete()
+    def delete_neighbourhood(self):
+        self.delete()
 
     @classmethod
     def update_neighbourhood(cls, id):
@@ -144,6 +147,10 @@ class Contact(models.Model):
     # create contact
     def create_contact(self):
         self.save()
+
+    @classmethod
+    def get_contact(cls, id):
+        return cls.objects.get(id=id)
 
     def __str__(self):
         return self.name
