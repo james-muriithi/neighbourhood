@@ -30,10 +30,12 @@ ENV = config('ENV', default='development')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%n82%3%b%lh+ymfes&&kh6*1%-wp^ia!*+(!fg!+xjx9i8_9)$'
+SECRET_KEY = config('SECRET_KEY', default='secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if ENV == 'development' else False
+
+ALLOWED_HOSTS = ['*']
 
 ALLOWED_HOSTS = ['*']
 
@@ -47,7 +49,6 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,7 +60,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'django_registration',
-    'cloudinary'
+    'cloudinary',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [
@@ -163,3 +165,10 @@ cloudinary.config(
     api_secret=config('CLOUDINARY_API_SECRET', default=''),
     secure=True
 )
+
+# Email config
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.googlemail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = config('MAIL_USERNAME', default='')
+EMAIL_HOST_PASSWORD = config('MAIL_PASSWORD', default='')

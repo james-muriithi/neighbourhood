@@ -219,6 +219,7 @@ class User(AbstractUser):
         NeighbourHood, on_delete=models.SET_NULL, null=True, related_name="users")
     location = models.ForeignKey(
         Location, on_delete=models.SET_NULL, null=True)
+    is_active = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'full_name']
 
