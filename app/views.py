@@ -75,6 +75,7 @@ def single_post(request, slug):
 
 
 @login_required()
+@has_neighbourhood
 def upload_post(request):
     if request.method == 'POST' and request.FILES['image']:
         form = PostForm(request.POST, request.FILES)
@@ -92,6 +93,7 @@ def upload_post(request):
 
 
 @login_required()
+@has_neighbourhood
 def upload_business(request):
     if request.method == 'POST' and request.FILES['image']:
         form = BusinessForm(request.POST, request.FILES)
@@ -131,6 +133,7 @@ def delete_business(request, business_id):
 
 
 @login_required()
+@has_neighbourhood
 def single_business(request, slug):
     business = Business.get_business_by_slug(slug)
     return render(request, 'single-business.html', {'business': business, })
