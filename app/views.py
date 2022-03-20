@@ -6,8 +6,8 @@ import cloudinary.api
 from app.decorators import has_neighbourhood
 from django.utils.text import slugify
 
-from app.forms import PostForm, ProfileForm, UpdatePostForm
-from app.models import Location, NeighbourHood, Post
+from app.forms import BusinessForm, PostForm, ProfileForm, UpdatePostForm
+from app.models import Business, Location, NeighbourHood, Post
 
 # Create your views here.
 
@@ -88,3 +88,48 @@ def upload_post(request):
             return redirect(request.META.get('HTTP_REFERER'), {'success': 'Post Uploaded Successfully'})
 
     return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error uploading'})
+
+
+@login_required()
+def upload_business(request):
+    if request.method == 'POST' and request.FILES['image']:
+        form = BusinessForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            business = form.save(commit=False)
+            business.user = request.user
+            business.neighbourhood = request.user.neighbourhood
+            business.save_business()
+
+            return redirect(request.META.get('HTTP_REFERER'), {'success': 'Business Uploaded Successfully'})
+
+    return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error uploading'})
+
+
+@login_required()
+def update_business(request, business_id):
+    if request.method == 'POST':
+        business = Business.get_business(business_id)
+        form = UpdatePostForm(request.POST, instance=business)
+
+        if form.is_valid():
+            business = form.save(commit=False)
+            business.slug = slugify(business.name)
+            business.save()
+            return redirect(request.META.get('HTTP_REFERER'), {'success': 'Business updated Successfully'})
+
+    return redirect(request.META.get('HTTP_REFERER'), {'error': 'There was an error updating'})
+
+
+# delete business
+@login_required()
+def delete_business(request, business_id):
+    businesss = Business.get_business(business_id)
+    businesss.delete_business()
+    return redirect("/profile", {"success": "Business deleted Successfully"})
+
+
+@login_required()
+def single_business(request, slug):
+    business = Business.get_business_by_slug(slug)
+    return render(request, 'single-business.html', {'business': business, })
