@@ -6,7 +6,7 @@ import cloudinary.api
 from app.decorators import has_neighbourhood
 from django.utils.text import slugify
 
-from app.forms import BusinessForm, PostForm, ProfileForm, UpdatePostForm
+from app.forms import BusinessForm, PostForm, ProfileForm, UpdateBusinessForm, UpdatePostForm
 from app.models import Business, Location, NeighbourHood, Post
 
 # Create your views here.
@@ -110,7 +110,7 @@ def upload_business(request):
 def update_business(request, business_id):
     if request.method == 'POST':
         business = Business.get_business(business_id)
-        form = UpdatePostForm(request.POST, instance=business)
+        form = UpdateBusinessForm(request.POST, instance=business)
 
         if form.is_valid():
             business = form.save(commit=False)
