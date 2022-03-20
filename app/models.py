@@ -192,6 +192,10 @@ class Post(models.Model):
         post = cls.objects.get(id=id)
         return post
 
+    @classmethod
+    def get_all_posts(cls):
+        return cls.objects.all()
+
     def __str__(self):
         return self.title
 

@@ -15,7 +15,8 @@ from app.models import Business, Location, NeighbourHood, Post
 @login_required()
 @has_neighbourhood
 def index(request):
-    return render(request, 'index.html')
+    posts = Post.get_all_posts()
+    return render(request, 'index.html', {'posts': posts})
 
 
 @login_required()
