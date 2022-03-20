@@ -163,6 +163,76 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row gutters-sm">
+                    <div class="col-sm-12 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <h2 class="fw-bold fs-3 text-center text-secondary">Your Businesses</h2>
+                                    <button data-bs-target="#add-business-modal" data-bs-toggle="modal"
+                                        class="btn btn-primary text-white ms-auto">
+                                        Add Business
+                                    </button>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-responsive table-hover mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Business Email</th>
+                                                <th scope="col">Neighbourhood</th>
+                                                <th scope="col">Created At</th>
+                                                <th scope="col">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% if user.businesses.count > 0 %}
+                                            {% for business in user.businesses.all %}
+                                            <tr>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>
+                                                    <img src="{{business.thumbnail}}" alt="" class="img-40">
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'single_business' slug=business.slug %}">
+                                                        {{business.name|truncatechars:30}}
+                                                    </a>
+                                                </td>
+                                                <td>{{business.email}}</td>
+                                                <td>
+                                                    {{business.neighbourhood}}
+                                                </td>
+                                                <td>{{business.created_at|date}}</td>
+                                                <td>
+                                                    <button class="btn" data-bs-toggle="modal"
+                                                        data-bs-target="#edit-business-{{business.id}}">
+                                                        <span class="material-icons">edit</span>
+                                                    </button>
+                                                    <a href="{% url 'business_delete' business_id=business.id %}"
+                                                        class="btn ms-auto text-danger">
+                                                        <span class="material-icons">delete</span>
+                                                    </a>
+                                                    {% include 'partials/edit-business-modal.html' %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                            {% else %}
+                                            <tr>
+                                                <td colspan="7" class="text-center">
+                                                    You havent added any of your business yet
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
