@@ -38,6 +38,16 @@
                         Owned by <span class="fw-bold text-primary">{{business.user.full_name}}</span> .
                         <span class="ps-2">{{business.created_at|date}}</span>
                     </p>
+                    <div class="row pt-2">
+                        <div class="col-md-6 mb-2 d-flex align-items-center">
+                            <i class="material-icons fs-6">email</i>
+                            <a href="mailto:{{business.email}}" class="ps-2 text-sm">{{business.email}}</a>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <i class="material-icons fs-6">phone</i>
+                            <a href="tel:{{business.user.contact}}" class="ps-2 text-sm">{{business.user}}</a>
+                        </div>
+                    </div>
                     <div class="description pt-2">
                         <p class="text-muted text-start">
                             {{business.description}}
