@@ -1,0 +1,24 @@
+{% load static %}
+<div class="project-card">
+    <div class="position-relative project-image">
+        <img src="{{post.thumbnail}}" alt="" class="img-fluid image w-100">
+        <div data-url="{% url 'single_post' slug=post.slug %}" class="position-absolute top-0 h-100 w-100 overlay flex-column">
+        </div>
+    </div>
+    <div class="details  p-3">
+        <p class="text-muted mb-1 text-sm">
+            {{post.location}} . <span class="ps-2">{{post.created_at | date}}</span>
+        </p>
+        <a href="{% url 'single_post' slug=post.slug %}" class="">
+            <h6 class="fw-bold">
+                {{post.title | truncatechars:30}}
+            </h6>
+        </a>
+        <div class="d-flex align-items-center">
+            <img src="{{post.user.user_avatar}}" height="30" width="30" alt="" class="avatar rounded-circle">
+            <div class="ps-3">
+                <span class="text-muted mb-1 text-uppercase text-xs">By {{post.user.full_name}}</span>
+            </div>
+        </div>
+    </div>
+</div>

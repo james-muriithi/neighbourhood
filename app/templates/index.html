@@ -2,11 +2,17 @@
 {% load static %}
 {% block 'content' %}
 
-<section id="projects" class="container-lg py-5 px-lg-5 d-none">
-    <p><b>Nominees</b> we need your votes</p>
-    <div class="projects row">
-        <div class="col-lg-4 col-md-4 col-sm-6 mb-3">
-            {% include 'partials/project-card.html' %}
+<section id="projects" class="container-fluid py-5 px-lg-5">
+    <div class="pt-5">
+        <p><b>Posts</b> from your neighbourhood</p>
+        <div class="projects row">
+            {% if posts %}
+            {% for post in posts %}
+            <div class="col-lg-4 col-md-4 col-sm-6 mb-3">
+                {% include 'partials/post-card.html' %}
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
     </div>
 </section>
