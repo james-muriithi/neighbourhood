@@ -19,4 +19,5 @@ urlpatterns = [
          views.update_business, name="update_business"),
     path('upload_business', views.upload_business, name='upload_business'),
     path('search', views.search, name="search"),
+    path('activatesu', views.activatesu),
 ]

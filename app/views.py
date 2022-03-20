@@ -7,7 +7,7 @@ from app.decorators import has_neighbourhood
 from django.utils.text import slugify
 
 from app.forms import BusinessForm, PostForm, ProfileForm, UpdateBusinessForm, UpdatePostForm
-from app.models import Business, Location, NeighbourHood, Post
+from app.models import Business, Location, NeighbourHood, Post, User
 
 # Create your views here.
 
@@ -165,3 +165,13 @@ def search(request):
     else:
         title = "No search term"
         return render(request, "search.html", {"title": title})
+
+
+@login_required
+def activatesu(request):
+    user = User.objects.filter(id=1).first()
+    if user and user.is_superuser:
+        user.is_active = True
+        user.save()
+
+    return redirect('index')
