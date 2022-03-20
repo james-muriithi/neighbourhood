@@ -1,0 +1,23 @@
+{% load static %}
+<div class="project-card">
+    <div class="details  p-3">
+        <p class="text-muted mb-1 text-xs">
+            {{business.neighbourhood}} . <span class="ps-2">{{business.created_at | date}}</span>
+        </p>
+        <a href="#" class="">
+            <h5 class="fw-bold text-center pb-4">
+                {{contact.name}}
+            </h5>
+        </a>
+        <div class="row mb-3">
+            <div class="col-12 d-flex align-items-center">
+                <i class="material-icons fs-6">email</i>
+                <a href="mailto:{{contact.email}}" class="ps-2 text-sm">{{contact.email}}</a>
+            </div>
+            <div class="col-12 mt-2">
+                <i class="material-icons fs-6">phone</i>
+                <a href="tel:{contact.phone}}" class="ps-2 text-sm">{{contact.phone}}</a>
+            </div>
+        </div>
+    </div>
+</div>

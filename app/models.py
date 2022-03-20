@@ -137,7 +137,8 @@ class Contact(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50, blank=True, null=True)
     phone = models.CharField(max_length=50)
-    neighbourhood = models.ForeignKey(NeighbourHood, on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(
+        NeighbourHood, on_delete=models.CASCADE, related_name="contacts")
     created_at = models.DateTimeField(auto_now_add=True)
 
     # create contact

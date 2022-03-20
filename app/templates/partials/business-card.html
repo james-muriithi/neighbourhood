@@ -15,13 +15,14 @@
                 {{business.name | truncatechars:30}}
             </h6>
         </a>
-        <div class="d-flex mb-3">
-            <div class="col d-flex center">
+        <div class="row mb-3">
+            <div class="col-12 d-flex align-items-center">
                 <i class="material-icons fs-6">email</i>
                 <a href="mailto:{{business.email}}" class="ps-2 text-sm">{{business.email}}</a>
             </div>
-            <div class="col">
-                <a href="tel:{{business.user.contact}}" class="">{{business.user.contact}}</a>
+            <div class="col-12 mt-2">
+                <i class="material-icons fs-6">phone</i>
+                <a href="tel:{{business.user.contact}}" class="ps-2 text-sm">{{business.user}}</a>
             </div>
         </div>
         <div class="d-flex align-items-center">

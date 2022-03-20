@@ -11,6 +11,7 @@ urlpatterns = [
     path('post/<post_id>/update', views.update_post, name="update_post"),
     path('upload_post', views.upload_post, name='upload_post'),
     path('businesses', views.businesses, name="businesses"),
+    path('contacts', views.contacts, name="contacts"),
     path('business/<slug>', views.single_business, name="single_business"),
     path('business/<business_id>/delete',
          views.delete_business, name="business_delete"),

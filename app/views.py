@@ -141,3 +141,9 @@ def single_business(request, slug):
 def businesses(request):
     businesses = request.user.neighbourhood.businesses.all()
     return render(request, 'businesses.html', {'businesses': businesses})
+
+@login_required()
+@has_neighbourhood
+def contacts(request):
+    contacts = request.user.neighbourhood.contacts.all()
+    return render(request, 'contacts.html', {'contacts': contacts})
